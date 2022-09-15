@@ -6,7 +6,7 @@ const retreive = async (req, res) => {
     try {
         const {
             userId,
-            solutionIndex
+            _index: solutionIndex
         } = req.body;
         let gameData = undefined;
         let game = await gameModel.find({
@@ -23,7 +23,7 @@ const retreive = async (req, res) => {
         if (!config.length) res.status(400).send('Config is missing');
         const solution = config[0].words[solutionIndex] ? config[0].words[solutionIndex] :
             config[0].words[config[0].words.length - 1];
-        res.json({ gameData, solution: encrypt(solution) });
+        res.json({ gameData, _res: encrypt(solution) });
     } catch (error) {
         console.log(error, 'retreive');
         const errorMsg = error.message ? error.message : error;

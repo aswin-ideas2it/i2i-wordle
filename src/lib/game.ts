@@ -30,7 +30,7 @@ export const retreiveGameDetails = (userId: string, solutionIndex: number) => {
       const url = serverPath.baseUrl + serverPath.api.retreive
       const response: any = await sendPostRequest(url, {
         userId,
-        solutionIndex,
+        _index: solutionIndex,
       })
       const gameData = response.gameData as RawGameDataDoc | undefined
       if (gameData?.state && gameData?.stats) {
@@ -39,7 +39,7 @@ export const retreiveGameDetails = (userId: string, solutionIndex: number) => {
       }
       resolve({
         gameData: gameData as GameDataDoc,
-        solution: decrypt(response.solution),
+        solution: decrypt(response._res),
       })
     } catch (err) {
       reject(err)

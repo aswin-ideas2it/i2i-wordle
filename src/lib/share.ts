@@ -23,14 +23,17 @@ export const shareStatus = (
 ) => {
   const solutionData = getSolution(gameDate)
   const textToShare =
-    `${GAME_TITLE} ${solutionData.solutionIndex} ${
-      lost ? 'X' : guesses.length
-    }/${MAX_CHALLENGES}${isHardMode ? '*' : ''}\n\n` +
-    generateEmojiGrid(
+    `   ${GAME_TITLE} ${solutionData.solutionIndex + 1} ${lost ? 'X' : guesses.length
+    }/${MAX_CHALLENGES}${isHardMode ? '*' : ''}
+    
+    ${generateEmojiGrid(
       solution,
       guesses,
       getEmojiTiles(isDarkMode, isHighContrastMode)
-    )
+    )}
+    
+    https://ps.ideas2it.com/
+    `
 
   const shareData = { text: textToShare }
 
