@@ -10,6 +10,7 @@ const { deleteUser } = require('./../api/delete');
 const { checkGuesses } = require('./../api/guesses');
 const { gameDate } = require('./../api/filter/gameDate');
 
+router.get('/health', (req, res) => res.send('Good!'));
 router.post('/retreive', retreive);
 router.post('/create', create);
 router.post('/updateState', updateState);
