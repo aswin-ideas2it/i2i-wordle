@@ -79,6 +79,11 @@ svg.cursor-pointer:hover {
   padding: 0.5rem 0.8rem 0.5rem 0.5rem;
 }
 
+.navbar-content .mobile.navbar-title {
+  font-size: 12px;
+  line-height: 12px;
+}
+
 .navbar-content .navbar-image.desktop {
   padding: 0.5rem;
   width: 150px;

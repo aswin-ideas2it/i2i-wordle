@@ -11,6 +11,6 @@ export const ENCRYPTION_KEY = process.env.REACT_APP_ENCRYPTION_KEY as string
 export const ENCRYPTION_IV = process.env.REACT_APP_ENCRYPTION_IV as string
 export const ENABLE_ARCHIVED_GAMES = false
 export const DATE_LOCALE = enUS
-export const START_DATE = 12
+export const START_DATE = 15
 export const START_MONTH = 9 - 1
 export const START_YEAR = 2022

@@ -49,7 +49,7 @@ export const Navbar = ({
     <img alt="logo" src={isDarkMode ? darkLogo : logo}></img>
   </div>
 
-  const NavBarTitle = () => <div className="text-xl font-bold dark:text-white">{GAME_TITLE}</div>
+  const NavBarTitle = () => <div className={`navbar-title text-xl font-bold dark:text-white ${isMobile ? 'mobile' : 'desktop'}`}>{GAME_TITLE}</div>
 
   return (
     <div className="navbar">
