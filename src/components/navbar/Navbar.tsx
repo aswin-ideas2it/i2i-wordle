@@ -28,10 +28,10 @@ export const Navbar = ({
   isDarkMode,
 }: Props) => {
   const auth0 = useAuth0()
-  const [isMobile, setMobile] = useState(window.innerWidth < 700);
+  const [isMobile, setMobile] = useState(window.innerWidth < 800);
 
   const updateMedia = () => {
-    setMobile(window.innerWidth < 700);
+    setMobile(window.innerWidth < 800);
   };
   useEffect(() => {
     window.addEventListener("resize", updateMedia);
