@@ -22,9 +22,9 @@ export const shareStatus = (
   handleShareFailure: () => void
 ) => {
   const solutionData = getSolution(gameDate)
-  const textToShare =
-    `   ${GAME_TITLE} ${solutionData.solutionIndex + 1} ${lost ? 'X' : guesses.length
-    }/${MAX_CHALLENGES}${isHardMode ? '*' : ''}
+  const textToShare = `   ${GAME_TITLE} ${solutionData.solutionIndex + 1} ${
+    lost ? 'X' : guesses.length
+  }/${MAX_CHALLENGES}${isHardMode ? '*' : ''}
     
     ${generateEmojiGrid(
       solution,

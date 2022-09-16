@@ -89,15 +89,14 @@ svg.cursor-pointer:hover {
   width: 150px;
 }
 
-@media (min-width:100px) and (max-width:480px) {
-
+@media (min-width: 100px) and (max-width: 480px) {
   .wordly-cell {
     font-size: 1rem !important;
     line-height: 1.5rem !important;
   }
-  
+
   .wordly-key {
-    font-size: 0.60rem !important;
+    font-size: 0.6rem !important;
     line-height: 1rem !important;
   }
 }

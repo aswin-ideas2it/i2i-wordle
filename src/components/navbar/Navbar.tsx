@@ -28,15 +28,15 @@ export const Navbar = ({
   isDarkMode,
 }: Props) => {
   const auth0 = useAuth0()
-  const [isMobile, setMobile] = useState(window.innerWidth < 800);
+  const [isMobile, setMobile] = useState(window.innerWidth < 800)
 
   const updateMedia = () => {
-    setMobile(window.innerWidth < 800);
-  };
+    setMobile(window.innerWidth < 800)
+  }
   useEffect(() => {
-    window.addEventListener("resize", updateMedia);
-    return () => window.removeEventListener("resize", updateMedia);
-  });
+    window.addEventListener('resize', updateMedia)
+    return () => window.removeEventListener('resize', updateMedia)
+  })
 
   const onLogInBtnClick = () => auth0.loginWithRedirect()
 
@@ -45,22 +45,36 @@ export const Navbar = ({
     auth0.logout({ returnTo: window.location.origin })
   }
 
-  const NavBarImage = () => <div className={`navbar-image ${isMobile ? 'mobile' : 'desktop'}`}>
-    <img alt="logo" src={isDarkMode ? darkLogo : logo}></img>
-  </div>
+  const NavBarImage = () => (
+    <div className={`navbar-image ${isMobile ? 'mobile' : 'desktop'}`}>
+      <img alt="logo" src={isDarkMode ? darkLogo : logo}></img>
+    </div>
+  )
 
-  const NavBarTitle = () => <div className={`navbar-title text-xl font-bold dark:text-white ${isMobile ? 'mobile' : 'desktop'}`}>{GAME_TITLE}</div>
+  const NavBarTitle = () => (
+    <div
+      className={`navbar-title text-xl font-bold dark:text-white ${
+        isMobile ? 'mobile' : 'desktop'
+      }`}
+    >
+      {GAME_TITLE}
+    </div>
+  )
 
   return (
     <div className="navbar">
       <div className="navbar-content px-5 short:h-auto">
-        {!isMobile ? <>
-          <NavBarImage />
-          <NavBarTitle />
-        </> : <div className='flex flex-row justify-center items-center'>
-          <NavBarImage />
-          <NavBarTitle />
-        </div>}
+        {!isMobile ? (
+          <>
+            <NavBarImage />
+            <NavBarTitle />
+          </>
+        ) : (
+          <div className="flex flex-row items-center justify-center">
+            <NavBarImage />
+            <NavBarTitle />
+          </div>
+        )}
 
         <div className="right-icons">
           <div className="worldy-user-profile">
@@ -88,7 +102,8 @@ export const Navbar = ({
                   </span>
                 </Dropdown.Header>
                 <Dropdown.Item onClick={() => onLogOutBtnClick()}>
-                  <LogoutIcon className="h-6 w-6 mr-2 cursor-pointer dark:stroke-white" />  வெளியேறு
+                  <LogoutIcon className="mr-2 h-6 w-6 cursor-pointer dark:stroke-white" />{' '}
+                  வெளியேறு
                 </Dropdown.Item>
               </Dropdown>
             ) : (
