@@ -25,7 +25,7 @@ export const Cell = ({
   const isHighContrast = getStoredIsHighContrastMode()
 
   const classes = classnames(
-    'xxshort:w-11 xxshort:h-11 short:text-2xl short:w-12 short:h-12 w-20 h-16 border-solid border-2 flex items-center justify-center mx-0.5 text-2xl font-bold rounded dark:text-white',
+    'wordly-cell xxshort:w-11 xxshort:h-11 short:text-2xl short:w-12 short:h-12 w-20 h-16 border-solid border-2 flex items-center justify-center mx-0.5 text-2xl font-bold rounded dark:text-white',
     {
       'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-600':
         !status,
