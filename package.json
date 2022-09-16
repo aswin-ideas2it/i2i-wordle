@@ -10,7 +10,7 @@
     "client": "react-scripts start",
     "server": "node server/app.js",
     "start": "concurrently \"npm:server\" \"npm:client\"",
-    "test": "react-scripts test",
+    "test": "react-scripts test --passWithNoTests",
     "prepare": "husky install"
   },
   "dependencies": {
