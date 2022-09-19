@@ -22,9 +22,8 @@ export const shareStatus = (
   handleShareFailure: () => void
 ) => {
   const solutionData = getSolution(gameDate)
-  const textToShare = `   ${GAME_TITLE} ${solutionData.solutionIndex + 1} ${
-    lost ? 'X' : guesses.length
-  }/${MAX_CHALLENGES}${isHardMode ? '*' : ''}
+  const textToShare = `${GAME_TITLE} ${solutionData.solutionIndex + 1} ${lost ? 'X' : guesses.length
+    }/${MAX_CHALLENGES}${isHardMode ? '*' : ''}
     
     ${generateEmojiGrid(
       solution,
@@ -32,9 +31,8 @@ export const shareStatus = (
       getEmojiTiles(isDarkMode, isHighContrastMode)
     )}
     
-    https://ps.ideas2it.com/
+    https://ponniyinselvan.ideas2it.com/
     `
-
   const shareData = { text: textToShare }
 
   let shareSuccess = false

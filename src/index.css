@@ -124,6 +124,11 @@ svg.cursor-pointer:hover {
   .title-header .title-logo {
     max-width: 100%;
   }
+
+  .title-header .title-desc {
+    max-width: 300px;
+    font-size: .8rem;
+  }
 }
 
 .right-icons {
