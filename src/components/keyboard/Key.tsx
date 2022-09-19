@@ -33,7 +33,7 @@ export const Key = ({
     'wordly-key xxshort:h-8 active:animate-pulse xxshort:w-8 xxshort:text-xxs xshort:w-10 xshort:h-10 flex short:h-10 h-10 items-center justify-center rounded mx-0.5 text-xs font-bold cursor-pointer select-none dark:text-white',
     {
       'transition ease-in-out': isRevealing,
-      'bg-slate-200 dark:bg-slate-600 hover:bg-slate-300 active:bg-slate-400':
+      'bg-slate-200 dark:bg-[#5a524f] hover:bg-[#5a524f] active:bg-[#5a524f]':
         !status,
       'bg-slate-400 dark:bg-slate-800 text-white': status === 'absent',
       'bg-orange-500 hover:bg-orange-600 active:bg-orange-700 text-white':

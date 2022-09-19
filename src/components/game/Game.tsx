@@ -1,13 +1,12 @@
 import { default as GraphemeSplitter } from 'grapheme-splitter'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import Div100vh from 'react-div-100vh'
-
+import titleLogo from './../../assets/title.png';
 import { Grid } from './../../components/grid/Grid'
 import { Keyboard } from './../../components/keyboard/Keyboard'
 import Loader from './../../components/loader'
 import { InfoModal } from './../../components/modals/InfoModal'
 import { MigrateStatsModal } from './../../components/modals/MigrateStatsModal'
-import { SettingsModal } from './../../components/modals/SettingsModal'
 import { StatsModal } from './../../components/modals/StatsModal'
 import { Navbar } from './../../components/navbar/Navbar'
 import {
@@ -20,7 +19,6 @@ import {
 import {
   DISCOURAGE_INAPP_BROWSER_TEXT,
   GAME_COPIED_MESSAGE,
-  HARD_MODE_ALERT_MESSAGE,
   NOT_ENOUGH_LETTERS_MESSAGE,
   SHARE_FAILURE_TEXT,
   WIN_MESSAGES,
@@ -31,8 +29,6 @@ import { isInAppBrowser } from './../../lib/browser'
 import { checkGuess } from './../../lib/game'
 import {
   GameStats,
-  getStoredIsHighContrastMode,
-  setStoredIsHighContrastMode,
 } from './../../lib/localStorage'
 import { getStatsForCompletedGame } from './../../lib/stats'
 import {
@@ -70,10 +66,6 @@ function Game({
   setIsGameLost,
 }: GameProps) {
   const isLatestGame = getIsLatestGame()
-  const prefersDarkMode = window.matchMedia(
-    '(prefers-color-scheme: dark)'
-  ).matches
-
   const { showError: showErrorAlert, showSuccess: showSuccessAlert } =
     useAlert()
   const [currentGuess, setCurrentGuess] = useState('')
@@ -81,25 +73,11 @@ function Game({
   const [isStatsModalOpen, setIsStatsModalOpen] = useState(false)
   const [loading, setIsLoading] = useState(false)
   const [isMigrateStatsModalOpen, setIsMigrateStatsModalOpen] = useState(false)
-  const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false)
   const [currentRowClass, setCurrentRowClass] = useState('')
-  const [isDarkMode, setIsDarkMode] = useState(
-    localStorage.getItem('theme')
-      ? localStorage.getItem('theme') === 'dark'
-      : prefersDarkMode
-      ? true
-      : false
-  )
-  const [isHighContrastMode, setIsHighContrastMode] = useState(
-    getStoredIsHighContrastMode()
-  )
+  const isDarkMode = useMemo(() => true, []);
+  const isHighContrastMode = useMemo(() => false, []);
+  const isHardMode = useMemo(() => false, []);
   const [isRevealing, setIsRevealing] = useState(false)
-
-  const [isHardMode, setIsHardMode] = useState(
-    localStorage.getItem('gameMode')
-      ? localStorage.getItem('gameMode') === 'hard'
-      : false
-  )
 
   useEffect(() => {
     if (isNewUser) {
@@ -132,25 +110,6 @@ function Game({
       document.documentElement.classList.remove('high-contrast')
     }
   }, [isDarkMode, isHighContrastMode])
-
-  const handleDarkMode = (isDark: boolean) => {
-    setIsDarkMode(isDark)
-    localStorage.setItem('theme', isDark ? 'dark' : 'light')
-  }
-
-  const handleHardMode = (isHard: boolean) => {
-    if (guesses.length === 0 || localStorage.getItem('gameMode') === 'hard') {
-      setIsHardMode(isHard)
-      localStorage.setItem('gameMode', isHard ? 'hard' : 'normal')
-    } else {
-      showErrorAlert(HARD_MODE_ALERT_MESSAGE)
-    }
-  }
-
-  const handleHighContrastMode = (isHighContrast: boolean) => {
-    setIsHighContrastMode(isHighContrast)
-    setStoredIsHighContrastMode(isHighContrast)
-  }
 
   const clearCurrentRowClass = () => {
     setCurrentRowClass('')
@@ -266,11 +225,13 @@ function Game({
         <Navbar
           setIsInfoModalOpen={setIsInfoModalOpen}
           setIsStatsModalOpen={setIsStatsModalOpen}
-          setIsSettingsModalOpen={setIsSettingsModalOpen}
-          isDarkMode={isDarkMode}
         />
 
-        <div className="mx-auto flex w-full grow flex-col px-1 pt-6 pb-8 sm:px-6 md:max-w-7xl lg:px-8 short:pb-2 short:pt-2">
+        <div className="mx-auto flex w-full grow flex-col pb-2">
+          <div className='title-header'>
+            <img className={`title-logo`} alt="logo" src={titleLogo}></img>
+            <div className={`title-desc`}>OPEN YOUR EYES TO THE GREATNESS OF TAMIL NADU'S LITERATURE AND HISTORY</div>
+          </div>
           <div
             style={{ position: 'relative' }}
             className="flex grow flex-col justify-center pb-6 short:pb-2"
@@ -327,16 +288,6 @@ function Game({
           <MigrateStatsModal
             isOpen={isMigrateStatsModalOpen}
             handleClose={() => setIsMigrateStatsModalOpen(false)}
-          />
-          <SettingsModal
-            isOpen={isSettingsModalOpen}
-            handleClose={() => setIsSettingsModalOpen(false)}
-            isHardMode={isHardMode}
-            handleHardMode={handleHardMode}
-            isDarkMode={isDarkMode}
-            handleDarkMode={handleDarkMode}
-            isHighContrastMode={isHighContrastMode}
-            handleHighContrastMode={handleHighContrastMode}
           />
         </div>
       </div>

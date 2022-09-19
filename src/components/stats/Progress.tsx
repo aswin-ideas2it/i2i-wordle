@@ -14,8 +14,8 @@ export const Progress = ({
   isCurrentDayStatRow,
 }: Props) => {
   const currentRowClass = classNames(
-    'text-xs font-medium text-blue-100 text-center p-0.5',
-    { 'bg-blue-600': isCurrentDayStatRow, 'bg-gray-600': !isCurrentDayStatRow }
+    'text-xs font-medium bg-[#be881f] text-center p-0.5',
+    { 'bg-[#be881f]': isCurrentDayStatRow, 'bg-gray-600': !isCurrentDayStatRow }
   )
   return (
     <div className="justify-left m-1 flex">

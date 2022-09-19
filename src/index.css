@@ -14,6 +14,8 @@
 }
 
 .dark {
+  background-color: #130b08 !important;
+  color: #f1cb81 !important;
   --default-cell-bg-color: theme('colors.slate.900');
   --default-cell-border-color: theme('colors.white');
   --default-cell-text-color: theme('colors.white');
@@ -66,30 +68,44 @@ svg.cursor-pointer:hover {
   animation-duration: var(--animation-speed-fast);
 }
 
-.navbar {
-  border-bottom: 1px solid lightgray;
-}
 .navbar-content {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.navbar-content .navbar-image.mobile {
-  padding: 0.5rem 0.8rem 0.5rem 0.5rem;
-}
-
-.navbar-content .mobile.navbar-title {
-  font-size: 12px;
-  line-height: 12px;
-}
-
-.navbar-content .navbar-image.desktop {
+.navbar-content .navbar-image {
   padding: 0.5rem;
-  width: 150px;
+  width: 107px;
 }
 
-@media (min-width: 100px) and (max-width: 480px) {
+.title-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.title-header .title-logo {
+  max-width: 500px;
+  height: 60px;
+}
+
+.title-header .title-desc {
+  max-width: 330px;
+  font-family: serif;
+  color: #fff;
+  font-size: 1rem;
+  line-height: 1rem;
+  margin-bottom: 20px;
+}
+
+.share-btn {
+  background-color: #be881f !important;
+  color: black;
+}
+
+@media (min-width: 100px) and (max-width: 510px) {
   .wordly-cell {
     font-size: 1rem !important;
     line-height: 1.5rem !important;
@@ -99,11 +115,15 @@ svg.cursor-pointer:hover {
     font-size: 0.6rem !important;
     line-height: 1rem !important;
   }
+
+  .title-header .title-logo {
+    max-width: 100%;
+  }
 }
 
 .right-icons {
   display: flex;
-  width: 150px;
+  width: 107px;
 }
 
 @keyframes revealAbsentCharCell {

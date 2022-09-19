@@ -36,17 +36,17 @@ type AppProps = {
 
 type GameDataProps = {
   local:
-    | undefined
-    | {
-        stats: GameStats
-        state: StoredGameState
-      }
+  | undefined
+  | {
+    stats: GameStats
+    state: StoredGameState
+  }
   db:
-    | undefined
-    | {
-        stats: GameStats
-        state: StoredGameState
-      }
+  | undefined
+  | {
+    stats: GameStats
+    state: StoredGameState
+  }
   latest: 'local' | 'db'
   latestData: {
     stats: GameStats
@@ -239,7 +239,7 @@ function App({
         gameWon: isGameWon,
         gameLost: isGameLost,
       })
-        .then(() => {})
+        .then(() => { })
         .catch((e: any) => {
           const errorMsg = e.message || e
           console.log(errorMsg)
@@ -253,7 +253,7 @@ function App({
     if (stats.totalGames) {
       saveStatsToLocalStorage(stats)
       updateStats(userDetails, stats)
-        .then(() => {})
+        .then(() => { })
         .catch((e: any) => {
           const errorMsg = e.message || e
           console.log(errorMsg)

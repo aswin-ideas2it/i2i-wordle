@@ -27,7 +27,7 @@ export const Cell = ({
   const classes = classnames(
     'wordly-cell xxshort:w-11 xxshort:h-11 short:text-2xl short:w-12 short:h-12 w-20 h-16 border-solid border-2 flex items-center justify-center mx-0.5 text-2xl font-bold rounded dark:text-white',
     {
-      'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-600':
+      'bg-white dark:bg-[#1d1512] border-[#5a524f] dark:border-[#5a524f]':
         !status,
       'border-black dark:border-slate-100': value && !status,
       'absent shadowed bg-slate-400 dark:bg-slate-700 text-white border-slate-400 dark:border-slate-700':
