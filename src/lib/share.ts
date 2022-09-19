@@ -22,17 +22,14 @@ export const shareStatus = (
   handleShareFailure: () => void
 ) => {
   const solutionData = getSolution(gameDate)
-  const textToShare = `${GAME_TITLE} ${solutionData.solutionIndex + 1} ${lost ? 'X' : guesses.length
-    }/${MAX_CHALLENGES}${isHardMode ? '*' : ''}
-    
-    ${generateEmojiGrid(
-      solution,
-      guesses,
-      getEmojiTiles(isDarkMode, isHighContrastMode)
-    )}
-    
-    https://ponniyinselvan.ideas2it.com/
-    `
+  const headerText = `${GAME_TITLE} ${solutionData.solutionIndex + 1} ${lost ? 'X' : guesses.length}/${MAX_CHALLENGES}${isHardMode ? '*' : ''}`
+  const footerText = `https://ponniyinselvan.ideas2it.com/`
+  const textToShare = headerText + '\n\n' + generateEmojiGrid(
+    solution,
+    guesses,
+    getEmojiTiles(isDarkMode, isHighContrastMode)
+  ) + '\n\n' + footerText + '\n'
+
   const shareData = { text: textToShare }
 
   let shareSuccess = false
