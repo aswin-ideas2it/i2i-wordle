@@ -227,7 +227,7 @@ function Game({
           setIsStatsModalOpen={setIsStatsModalOpen}
         />
 
-        <div className="mx-auto flex w-full grow flex-col pb-2 pl-3 pr-3">
+        <div className="mx-auto flex w-full grow flex-col pb-10 pl-3 pr-3">
           <div className='title-header'>
             <img className={`title-logo`} alt="logo" src={titleLogo}></img>
             <div className={`title-desc`}>OPEN YOUR EYES TO THE GREATNESS OF TAMIL NADU'S LITERATURE AND HISTORY</div>

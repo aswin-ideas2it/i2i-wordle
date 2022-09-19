@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'trajan';
+  src: URL('./assets/Trajan_Pro.ttf') format('truetype');
+}
+
 :root {
   --animation-speed: 1000ms;
   --animation-speed-fast: 250ms;
@@ -92,11 +97,11 @@ svg.cursor-pointer:hover {
 }
 
 .title-header .title-desc {
-  max-width: 330px;
-  font-family: serif;
+  font-family: trajan;
+  max-width: 370px;
   color: #fff;
   font-size: 1rem;
-  line-height: 1rem;
+  line-height: 1.2rem;
   margin-bottom: 20px;
 }
 
