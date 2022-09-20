@@ -3,7 +3,7 @@ import { UAParser } from 'ua-parser-js'
 import { MAX_CHALLENGES } from '../constants/settings'
 import { GAME_TITLE } from '../constants/strings'
 import { getGuessStatuses } from './statuses'
-import { getSolution, unicodeSplit } from './words'
+import { unicodeSplit } from './words'
 
 const webShareApiDeviceTypes: string[] = ['mobile', 'smarttv', 'wearable']
 const parser = new UAParser()
@@ -12,7 +12,7 @@ const device = parser.getDevice()
 
 export const shareStatus = (
   solution: string,
-  gameDate: Date,
+  index: number,
   guesses: string[],
   lost: boolean,
   isHardMode: boolean,
@@ -21,14 +21,21 @@ export const shareStatus = (
   handleShareToClipboard: () => void,
   handleShareFailure: () => void
 ) => {
-  const solutionData = getSolution(gameDate)
-  const headerText = `${GAME_TITLE} ${solutionData.solutionIndex + 1} ${lost ? 'X' : guesses.length}/${MAX_CHALLENGES}${isHardMode ? '*' : ''}`
+  const headerText = `${GAME_TITLE} ${index + 1} ${
+    lost ? 'X' : guesses.length
+  }/${MAX_CHALLENGES}${isHardMode ? '*' : ''}`
   const footerText = `https://ponniyinselvan.ideas2it.com/`
-  const textToShare = headerText + '\n\n' + generateEmojiGrid(
-    solution,
-    guesses,
-    getEmojiTiles(isDarkMode, isHighContrastMode)
-  ) + '\n\n' + footerText + '\n'
+  const textToShare =
+    headerText +
+    '\n\n' +
+    generateEmojiGrid(
+      solution,
+      guesses,
+      getEmojiTiles(isDarkMode, isHighContrastMode)
+    ) +
+    '\n\n' +
+    footerText +
+    '\n'
 
   const shareData = { text: textToShare }
 

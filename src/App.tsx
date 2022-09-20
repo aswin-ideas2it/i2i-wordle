@@ -29,24 +29,26 @@ type AppProps = {
   userDetails: UserDetails
   gameDoc: GameDataDoc | undefined
   oldUserId: string
-  gameDate: Date
+  gameDate: string
+  tomorrow: number
+  index: number
   solution: string
   isNewUser: boolean
 }
 
 type GameDataProps = {
   local:
-  | undefined
-  | {
-    stats: GameStats
-    state: StoredGameState
-  }
+    | undefined
+    | {
+        stats: GameStats
+        state: StoredGameState
+      }
   db:
-  | undefined
-  | {
-    stats: GameStats
-    state: StoredGameState
-  }
+    | undefined
+    | {
+        stats: GameStats
+        state: StoredGameState
+      }
   latest: 'local' | 'db'
   latestData: {
     stats: GameStats
@@ -62,6 +64,8 @@ function App({
   isNewUser,
   solution,
   gameDate,
+  index,
+  tomorrow,
 }: AppProps) {
   const [loading, setIsLoading] = useState(true)
   const { showError: showErrorAlert } = useAlert()
@@ -75,7 +79,6 @@ function App({
         state: {
           guesses: [],
           solution,
-          date: gameDate,
           gameWon: false,
           gameLost: false,
         },
@@ -169,7 +172,6 @@ function App({
         ? data.latestData.state.guesses
         : []
     data.latestData.state.solution = solution
-    data.latestData.state.date = gameDate
     data.latestData.state.gameWon = data.latestData.state.guesses.includes(
       data.latestData.state.solution
     )
@@ -228,18 +230,16 @@ function App({
       saveGameStateToLocalStorage({
         guesses,
         solution,
-        date: gameDate,
         gameWon: isGameWon,
         gameLost: isGameLost,
       })
       updateState(userDetails, {
         guesses,
         solution,
-        date: gameDate,
         gameWon: isGameWon,
         gameLost: isGameLost,
       })
-        .then(() => { })
+        .then(() => {})
         .catch((e: any) => {
           const errorMsg = e.message || e
           console.log(errorMsg)
@@ -253,7 +253,7 @@ function App({
     if (stats.totalGames) {
       saveStatsToLocalStorage(stats)
       updateStats(userDetails, stats)
-        .then(() => { })
+        .then(() => {})
         .catch((e: any) => {
           const errorMsg = e.message || e
           console.log(errorMsg)
@@ -278,6 +278,8 @@ function App({
       isGameLost={isGameLost}
       setIsGameLost={setIsGameLost}
       gameDate={gameDate}
+      index={index}
+      tomorrow={tomorrow}
     />
   )
 }

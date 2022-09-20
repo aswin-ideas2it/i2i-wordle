@@ -2,7 +2,7 @@ const { gameModel } = require('../models/game');
 const { auditModel } = require('../models/audit');
 const { decrypt } = require('../lib/encryption');
 const { getAuditDetails, getGameHistory } = require('../lib/audit');
-const { getFormattedDate } = require('../lib/date');
+const { getFormattedToday } = require('../lib/date');
 
 const updateState = async (req, res) => {
     try {
@@ -21,7 +21,6 @@ const updateState = async (req, res) => {
                 state: {
                     guesses: state.guesses,
                     solution: state.solution,
-                    date: state.date,
                     gameWon: state.gameWon,
                     gameLost: state.gameLost
                 }
@@ -30,7 +29,7 @@ const updateState = async (req, res) => {
         await auditModel.findOneAndUpdate({ userId: userDetails.userId }, {
             $set:
             {
-                [`history.${getFormattedDate(state.date)}`]: getGameHistory(state)
+                [`history.${getFormattedToday()}`]: getGameHistory(state)
             },
             $push: {
                 log: getAuditDetails(req)

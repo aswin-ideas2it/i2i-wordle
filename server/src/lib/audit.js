@@ -29,7 +29,7 @@ const getGameHistory = (state) => {
     return {
         guesses: state.guesses.length,
         status: gameStatus,
-        date: state.date,
+        date: new Date(),
     }
 }
 

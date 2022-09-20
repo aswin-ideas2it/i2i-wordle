@@ -1,13 +1,15 @@
 const { gameModel } = require('./../models/game');
 const { configModel } = require('./../models/config');
 const { encrypt } = require('./../lib/encryption');
+const { getSolution, getFormattedDate } = require('./../lib/date');
 
 const retreive = async (req, res) => {
     try {
         const {
-            userId,
-            _index: solutionIndex
+            userId
         } = req.body;
+        const _sol = getSolution();
+        const solutionIndex = _sol.index;
         let gameData = undefined;
         let game = await gameModel.find({
             userId: userId
@@ -23,7 +25,7 @@ const retreive = async (req, res) => {
         if (!config.length) res.status(400).send('Config is missing');
         const solution = config[0].words[solutionIndex] ? config[0].words[solutionIndex] :
             config[0].words[config[0].words.length - 1];
-        res.json({ gameData, _res: encrypt(solution) });
+        res.json({ gameData, _res: encrypt(solution), index: solutionIndex, tomorrow: _sol.tomorrow, gameDate: getFormattedDate(_sol.gameDate) });
     } catch (error) {
         console.log(error, 'retreive');
         const errorMsg = error.message ? error.message : error;

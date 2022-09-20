@@ -1,7 +1,8 @@
 import { default as GraphemeSplitter } from 'grapheme-splitter'
 import { useEffect, useMemo, useState } from 'react'
 import Div100vh from 'react-div-100vh'
-import titleLogo from './../../assets/title.png';
+
+import titleLogo from './../../assets/title.png'
 import { Grid } from './../../components/grid/Grid'
 import { Keyboard } from './../../components/keyboard/Keyboard'
 import Loader from './../../components/loader'
@@ -27,16 +28,9 @@ import {
 import { useAlert } from './../../context/AlertContext'
 import { isInAppBrowser } from './../../lib/browser'
 import { checkGuess } from './../../lib/game'
-import {
-  GameStats,
-} from './../../lib/localStorage'
+import { GameStats } from './../../lib/localStorage'
 import { getStatsForCompletedGame } from './../../lib/stats'
-import {
-  getIsLatestGame,
-  isWinningWord,
-  unicodeLength,
-  unicodeSplit,
-} from './../../lib/words'
+import { isWinningWord, unicodeLength, unicodeSplit } from './../../lib/words'
 
 type GameProps = {
   stats: GameStats
@@ -48,7 +42,9 @@ type GameProps = {
   setIsGameWon: (isWon: boolean) => void
   isGameLost: boolean
   setIsGameLost: (isLost: boolean) => void
-  gameDate: Date
+  gameDate: string
+  index: number
+  tomorrow: number
   isNewUser: boolean
 }
 
@@ -58,6 +54,8 @@ function Game({
   solution,
   guesses,
   gameDate,
+  index,
+  tomorrow,
   setGuesses,
   setStats,
   isGameWon,
@@ -65,7 +63,7 @@ function Game({
   isGameLost,
   setIsGameLost,
 }: GameProps) {
-  const isLatestGame = getIsLatestGame()
+  const isLatestGame = true
   const { showError: showErrorAlert, showSuccess: showSuccessAlert } =
     useAlert()
   const [currentGuess, setCurrentGuess] = useState('')
@@ -74,9 +72,9 @@ function Game({
   const [loading, setIsLoading] = useState(false)
   const [isMigrateStatsModalOpen, setIsMigrateStatsModalOpen] = useState(false)
   const [currentRowClass, setCurrentRowClass] = useState('')
-  const isDarkMode = useMemo(() => true, []);
-  const isHighContrastMode = useMemo(() => false, []);
-  const isHardMode = useMemo(() => false, []);
+  const isDarkMode = useMemo(() => true, [])
+  const isHighContrastMode = useMemo(() => false, [])
+  const isHardMode = useMemo(() => false, [])
   const [isRevealing, setIsRevealing] = useState(false)
 
   useEffect(() => {
@@ -228,9 +226,12 @@ function Game({
         />
 
         <div className="mx-auto flex w-full grow flex-col pb-10 pl-3 pr-3 pt-8">
-          <div className='title-header'>
+          <div className="title-header">
             <img className={`title-logo`} alt="logo" src={titleLogo}></img>
-            <div className={`title-desc`}>OPEN YOUR EYES TO THE GREATNESS OF TAMIL NADU'S LITERATURE AND HISTORY</div>
+            <div className={`title-desc`}>
+              OPEN YOUR EYES TO THE GREATNESS OF TAMIL NADU'S LITERATURE AND
+              HISTORY
+            </div>
           </div>
           <div
             style={{ position: 'relative' }}
@@ -264,7 +265,8 @@ function Game({
             handleClose={() => setIsStatsModalOpen(false)}
             solution={solution}
             guesses={guesses}
-            gameDate={gameDate}
+            index={index}
+            tomorrow={tomorrow}
             gameStats={stats}
             isLatestGame={isLatestGame}
             isGameLost={isGameLost}

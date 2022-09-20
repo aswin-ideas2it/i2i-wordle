@@ -2,7 +2,7 @@ const { gameModel } = require('./../models/game');
 const { auditModel } = require('./../models/audit');
 const { decrypt } = require('./../lib/encryption');
 const { getAuditDetails, getGameHistory } = require('./../lib/audit');
-const { getFormattedDate } = require('../lib/date');
+const { getFormattedToday } = require('../lib/date');
 
 const create = async (req, res) => {
     try {
@@ -11,7 +11,6 @@ const create = async (req, res) => {
             state: encryptedState,
             stats: encryptedStats
         } = req.body;
-
 
         const state = JSON.parse(decrypt(encryptedState));
         const stats = JSON.parse(decrypt(encryptedStats));
@@ -23,7 +22,6 @@ const create = async (req, res) => {
             state: {
                 guesses: state.guesses,
                 solution: state.solution,
-                date: state.date,
                 gameWon: state.gameWon,
                 gameLost: state.gameLost
             },
@@ -40,7 +38,7 @@ const create = async (req, res) => {
         await auditModel.create({
             userId: userDetails.userId,
             isLocalUser: userDetails.isLocalUser,
-            [`history.${getFormattedDate(state.date)}`]: getGameHistory(state),
+            [`history.${getFormattedToday()}`]: getGameHistory(state),
             log: [getAuditDetails(req)]
         });
         res.send(true);

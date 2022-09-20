@@ -11,11 +11,6 @@ const stateSchema = new Schema({
         required: true,
         unique: false
     },
-    date: {
-        type: Date,
-        required: true,
-        unique: false
-    },
     gameWon: {
         type: Boolean,
         required: true,

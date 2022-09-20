@@ -8,7 +8,6 @@ const highContrastKey = 'highContrast'
 export type StoredGameState = {
   guesses: string[]
   solution: string
-  date: Date
   gameWon: boolean
   gameLost: boolean
 }

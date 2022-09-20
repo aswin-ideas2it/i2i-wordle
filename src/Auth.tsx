@@ -1,5 +1,5 @@
 import { useAuth0 } from '@auth0/auth0-react'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
 import App from './App'
@@ -8,13 +8,13 @@ import { useAlert } from './context/AlertContext'
 import { GameDataDoc, retreiveGameDetails } from './lib/game'
 import { UserDetails, getUser, setUser } from './lib/localStorage'
 import { clearItems } from './lib/localStorage'
-import { getGameDate } from './lib/words'
-import { getSolution } from './lib/words'
 
 function Auth() {
   const { isLoading, isAuthenticated, user, error, logout } = useAuth0()
   const { showError: showErrorAlert } = useAlert()
-  const gameDate = useMemo(getGameDate, [])
+  const [gameDate, setGameDate] = useState('')
+  const [index, setIndex] = useState(0)
+  const [tomorrow, setTomorrow] = useState(0)
   const [isNewUser, setIsNewUser] = useState(false)
   const [solution, setSolution] = useState('')
   const [userDetails, setUserDetails] = useState<UserDetails>({
@@ -56,11 +56,11 @@ function Auth() {
         }
         _userDetails.isLocalUser = true
       }
-      retreiveGameDetails(
-        _userDetails.userId,
-        getSolution(gameDate).solutionIndex
-      )
+      retreiveGameDetails(_userDetails.userId)
         .then((data) => {
+          setGameDate(data.gameDate)
+          setIndex(data.index)
+          setTomorrow(data.tomorrow)
           setSolution(data.solution)
           if (
             _user &&
@@ -86,7 +86,7 @@ function Auth() {
         })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuthenticated, isLoading, user?.sub, gameDate])
+  }, [isAuthenticated, isLoading, user?.sub])
 
   return !loading && solution && userDetails.userId ? (
     <App
@@ -96,6 +96,8 @@ function Auth() {
       isNewUser={isNewUser}
       solution={solution}
       gameDate={gameDate}
+      tomorrow={tomorrow}
+      index={index}
     />
   ) : (
     <Loader loading={true} />

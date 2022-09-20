@@ -15,10 +15,7 @@ type Props = {
   setIsStatsModalOpen: (value: boolean) => void
 }
 
-export const Navbar = ({
-  setIsInfoModalOpen,
-  setIsStatsModalOpen,
-}: Props) => {
+export const Navbar = ({ setIsInfoModalOpen, setIsStatsModalOpen }: Props) => {
   const auth0 = useAuth0()
 
   const onLogInBtnClick = () => auth0.loginWithRedirect()
@@ -39,7 +36,7 @@ export const Navbar = ({
             {auth0.isAuthenticated ? (
               <Dropdown
                 label={
-                  <UserCircleIcon className="h-6 w-6 cursor-pointer header-icon" />
+                  <UserCircleIcon className="header-icon h-6 w-6 cursor-pointer" />
                 }
                 inline={true}
                 floatingArrow={false}
@@ -60,23 +57,23 @@ export const Navbar = ({
                   </span>
                 </Dropdown.Header>
                 <Dropdown.Item onClick={() => onLogOutBtnClick()}>
-                  <LogoutIcon className="mr-2 h-6 w-6 cursor-pointer  header-icon" />{' '}
+                  <LogoutIcon className="header-icon mr-2 h-6 w-6  cursor-pointer" />{' '}
                   வெளியேறு
                 </Dropdown.Item>
               </Dropdown>
             ) : (
               <UserCircleIcon
                 onClick={() => (auth0.isLoading ? {} : onLogInBtnClick())}
-                className="h-6 w-6 cursor-pointer header-icon"
+                className="header-icon h-6 w-6 cursor-pointer"
               />
             )}
           </div>
           <InformationCircleIcon
-            className="ml-3 mr-3 h-6 w-6 cursor-pointer header-icon"
+            className="header-icon ml-3 mr-3 h-6 w-6 cursor-pointer"
             onClick={() => setIsInfoModalOpen(true)}
           />
           <ChartBarIcon
-            className="mr-3 h-6 w-6 cursor-pointer header-icon"
+            className="header-icon mr-3 h-6 w-6 cursor-pointer"
             onClick={() => setIsStatsModalOpen(true)}
           />
         </div>

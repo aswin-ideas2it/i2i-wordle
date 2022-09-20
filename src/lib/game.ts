@@ -22,15 +22,17 @@ type RawGameDataDoc = {
 type GameDetails = {
   gameData: GameDataDoc
   solution: string
+  index: number
+  tomorrow: number
+  gameDate: string
 }
 
-export const retreiveGameDetails = (userId: string, solutionIndex: number) => {
+export const retreiveGameDetails = (userId: string) => {
   return new Promise<GameDetails>(async (resolve, reject) => {
     try {
       const url = serverPath.baseUrl + serverPath.api.retreive
       const response: any = await sendPostRequest(url, {
         userId,
-        _index: solutionIndex,
       })
       const gameData = response.gameData as RawGameDataDoc | undefined
       if (gameData?.state && gameData?.stats) {
@@ -40,6 +42,9 @@ export const retreiveGameDetails = (userId: string, solutionIndex: number) => {
       resolve({
         gameData: gameData as GameDataDoc,
         solution: decrypt(response._res),
+        index: response.index,
+        gameDate: response.gameDate,
+        tomorrow: response.tomorrow,
       })
     } catch (err) {
       reject(err)

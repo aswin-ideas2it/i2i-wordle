@@ -1,5 +1,4 @@
 import { ShareIcon } from '@heroicons/react/outline'
-import { useMemo } from 'react'
 import Countdown from 'react-countdown'
 
 import {
@@ -14,7 +13,6 @@ import {
 } from '../../constants/strings'
 import { GameStats } from '../../lib/localStorage'
 import { shareStatus } from '../../lib/share'
-import { getSolution } from '../../lib/words'
 import { Histogram } from '../stats/Histogram'
 import { MigrationIntro } from '../stats/MigrationIntro'
 import { StatBar } from '../stats/StatBar'
@@ -36,7 +34,8 @@ type Props = {
   isDarkMode: boolean
   isHighContrastMode: boolean
   numberOfGuessesMade: number
-  gameDate: Date
+  index: number
+  tomorrow: number
 }
 
 export const StatsModal = ({
@@ -55,9 +54,9 @@ export const StatsModal = ({
   isDarkMode,
   isHighContrastMode,
   numberOfGuessesMade,
-  gameDate,
+  index,
+  tomorrow,
 }: Props) => {
-  const solutionData = useMemo(() => getSolution(gameDate), [gameDate])
   if (gameStats.totalGames <= 0) {
     return (
       <BaseModal
@@ -96,7 +95,7 @@ export const StatsModal = ({
                 <h5>{NEW_WORD_TEXT}</h5>
                 <Countdown
                   className="text-lg font-medium text-gray-900 dark:text-gray-100"
-                  date={solutionData.tomorrow}
+                  date={tomorrow}
                   daysInHours={true}
                 />
               </div>
@@ -109,7 +108,7 @@ export const StatsModal = ({
               onClick={() => {
                 shareStatus(
                   solution,
-                  gameDate,
+                  index,
                   guesses,
                   isGameLost,
                   isHardMode,
