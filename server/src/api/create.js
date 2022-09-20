@@ -18,7 +18,7 @@ const create = async (req, res) => {
         await gameModel.create({
             userId: userDetails.userId,
             isLocalUser: userDetails.isLocalUser,
-            lastModified: new Date(),
+            lastModified: new Date().toISOString(),
             state: {
                 guesses: state.guesses,
                 solution: state.solution,

@@ -17,7 +17,7 @@ const updateState = async (req, res) => {
         await gameModel.findOneAndUpdate({ userId: userDetails.userId }, {
             $set:
             {
-                lastModified: new Date(),
+                lastModified: new Date().toISOString(),
                 state: {
                     guesses: state.guesses,
                     solution: state.solution,

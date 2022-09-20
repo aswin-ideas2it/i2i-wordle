@@ -5,7 +5,7 @@ const config = {
     },
     gameDate: {
         date: 19,
-        month: 9 - 1,
+        month: 9,
         year: 2022
     },
     gameStatus: {

@@ -1,27 +1,37 @@
 const { addDays,
     differenceInDays,
-    startOfToday,
-    startOfDay } = require('date-fns');
+} = require('date-fns');
 const { config: { gameDate: { month, year, date } } } = require('./../config');
 
-const firstGameDate = new Date(year, month, date);
+const parseDate = (date) => {
+    return date.toISOString().split("T")[0].split('-');
+}
+
+const getISTDate = (dateUTC) => {
+    const dateIST = new Date(dateUTC);
+    dateIST.setHours(dateIST.getHours() + 5);
+    dateIST.setMinutes(dateIST.getMinutes() + 30);
+    return dateIST;
+}
+
+const getInitialDate = (year, month, date) => {
+    month = month.toString().length === 1 ? '0' + month : month;
+    return new Date(`${year}-${month}-${date}T00:00:00.000Z`);
+}
+
+const firstGameDate = getInitialDate(year, month, date);
 const periodInDays = 1;
 
-const getToday = () => startOfToday();
+const getToday = () => getISTDate(new Date().getTime());
 
 const getLastGameDate = (today) => {
-    const t = startOfDay(today)
+    const t = getInitialDate(...parseDate(today));
     let daysSinceLastGame = differenceInDays(firstGameDate, t) % periodInDays
     return addDays(t, -daysSinceLastGame)
 }
 
 const getNextGameDate = (today) => {
     return addDays(getLastGameDate(today), periodInDays)
-}
-
-const getFormattedDate = (gameDate) => {
-    gameDate = new Date(gameDate);
-    return `${gameDate.getDate()}-${gameDate.getMonth() + 1}-${gameDate.getFullYear()}`;
 }
 
 const getIndex = (gameDate) => {
@@ -47,11 +57,12 @@ const getSolution = () => {
 }
 
 const getFormattedToday = () => {
-    const gameDate = getToday();
-    return getFormattedDate(gameDate);
+    const [year, month, date] = parseDate(getToday());
+    return `${date}-${month}-${year}`;
 }
+
 module.exports = {
-    getFormattedDate,
     getSolution,
+    getToday,
     getFormattedToday
 }

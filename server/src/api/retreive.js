@@ -1,7 +1,7 @@
 const { gameModel } = require('./../models/game');
 const { configModel } = require('./../models/config');
 const { encrypt } = require('./../lib/encryption');
-const { getSolution, getFormattedDate } = require('./../lib/date');
+const { getSolution, getFormattedToday } = require('./../lib/date');
 
 const retreive = async (req, res) => {
     try {
@@ -25,7 +25,7 @@ const retreive = async (req, res) => {
         if (!config.length) res.status(400).send('Config is missing');
         const solution = config[0].words[solutionIndex] ? config[0].words[solutionIndex] :
             config[0].words[config[0].words.length - 1];
-        res.json({ gameData, _res: encrypt(solution), index: solutionIndex, tomorrow: _sol.tomorrow, gameDate: getFormattedDate(_sol.gameDate) });
+        res.json({ gameData, _res: encrypt(solution), index: solutionIndex, tomorrow: _sol.tomorrow, gameDate: getFormattedToday() });
     } catch (error) {
         console.log(error, 'retreive');
         const errorMsg = error.message ? error.message : error;

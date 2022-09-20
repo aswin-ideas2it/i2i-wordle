@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid'
 import App from './App'
 import Loader from './components/loader'
 import { useAlert } from './context/AlertContext'
+import { getISTDate } from './lib/dateutils'
 import { GameDataDoc, retreiveGameDetails } from './lib/game'
 import { UserDetails, getUser, setUser } from './lib/localStorage'
 import { clearItems } from './lib/localStorage'
@@ -60,7 +61,7 @@ function Auth() {
         .then((data) => {
           setGameDate(data.gameDate)
           setIndex(data.index)
-          setTomorrow(data.tomorrow)
+          setTomorrow(getISTDate(data.tomorrow).getTime())
           setSolution(data.solution)
           if (
             _user &&

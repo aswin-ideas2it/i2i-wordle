@@ -20,7 +20,7 @@ const getAuditDetails = (req) => {
         ip: req.clientIp,
         ua: userAgent.source,
         isMobile: userAgent.isMobile,
-        date: new Date()
+        date: new Date().toISOString()
     }
 }
 
@@ -29,10 +29,9 @@ const getGameHistory = (state) => {
     return {
         guesses: state.guesses.length,
         status: gameStatus,
-        date: new Date(),
+        date: new Date().toISOString()
     }
 }
-
 
 module.exports = {
     getAuditDetails,

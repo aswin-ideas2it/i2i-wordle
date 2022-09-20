@@ -14,7 +14,7 @@ const updateStats = async (req, res) => {
         await gameModel.findOneAndUpdate({ userId: userDetails.userId }, {
             $set:
             {
-                lastModified: new Date(),
+                lastModified: new Date().toISOString(),
                 stats: {
                     winDistribution: stats.winDistribution,
                     gamesWon: stats.gamesWon,
