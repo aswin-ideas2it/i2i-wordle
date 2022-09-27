@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { AxiosBasicCredentials } from 'axios'
 
 const defaultHeaders = {
   'Content-Type': 'application/json',
@@ -29,15 +29,18 @@ export const sendGetRequest = (
 export const sendPostRequest = (
   url: string,
   data = {},
-  additionalHeaders = {}
+  additionalHeaders = {},
+  auth: AxiosBasicCredentials | undefined = undefined
 ) => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await axios({
         method: 'POST',
         url,
+        auth,
         data,
         headers: { ...defaultHeaders, ...additionalHeaders },
+        withCredentials: true,
       })
       resolve(response.data)
     } catch (err: any) {

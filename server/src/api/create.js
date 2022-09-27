@@ -1,5 +1,6 @@
 const { gameModel } = require('./../models/game');
 const { auditModel } = require('./../models/audit');
+const { userModel } = require('./../models/user');
 const { decrypt } = require('./../lib/encryption');
 const { getAuditDetails, getGameHistory } = require('./../lib/audit');
 const { getFormattedToday } = require('../lib/date');
@@ -15,6 +16,20 @@ const create = async (req, res) => {
         const state = JSON.parse(decrypt(encryptedState));
         const stats = JSON.parse(decrypt(encryptedStats));
 
+        const user = await userModel.find({ userId: userDetails.userId });
+        if (!user.length) {
+            await userModel.create({
+                userId: userDetails.userId,
+                password: null,
+                userName: null,
+                userType: 'local',
+                createdAt: new Date().toISOString(),
+                isVerified: false,
+                LastLoggedIn: null,
+                dp: null,
+                LoggedInTimes: 0
+            });
+        }
         await gameModel.create({
             userId: userDetails.userId,
             isLocalUser: userDetails.isLocalUser,
@@ -35,6 +50,7 @@ const create = async (req, res) => {
                 successRate: stats.successRate
             }
         });
+
         await auditModel.create({
             userId: userDetails.userId,
             isLocalUser: userDetails.isLocalUser,

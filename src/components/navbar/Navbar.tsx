@@ -1,30 +1,40 @@
-import { useAuth0 } from '@auth0/auth0-react'
 import {
   ChartBarIcon,
+  CheckCircleIcon,
   InformationCircleIcon,
   LogoutIcon,
   UserCircleIcon,
 } from '@heroicons/react/outline'
 import { Dropdown } from 'flowbite-react'
+import { useNavigate } from 'react-router-dom'
 
-import { clearItems } from '../../lib/localStorage'
+import { UserDetails, clearItems } from '../../lib/localStorage'
+import { logoutUser } from '../../lib/user'
 import logo from './../../assets/logo.svg'
 
 type Props = {
+  userDetails: UserDetails
   setIsInfoModalOpen: (value: boolean) => void
   setIsStatsModalOpen: (value: boolean) => void
 }
 
-export const Navbar = ({ setIsInfoModalOpen, setIsStatsModalOpen }: Props) => {
-  const auth0 = useAuth0()
+export const Navbar = ({
+  setIsInfoModalOpen,
+  setIsStatsModalOpen,
+  userDetails,
+}: Props) => {
+  const navigate = useNavigate()
+  const onLogInBtnClick = () => navigate('/login')
 
-  const onLogInBtnClick = () => auth0.loginWithRedirect()
-
-  const onLogOutBtnClick = () => {
+  const onLogOutBtnClick = async () => {
     clearItems()
-    auth0.logout({ returnTo: window.location.origin })
+    await logoutUser()
+    window.location.reload()
   }
 
+  const onVerifyBtnClick = async () => {
+    navigate(`/verify/${userDetails.id}`)
+  }
   return (
     <div className="navbar">
       <div className="navbar-content px-5 short:h-auto">
@@ -33,7 +43,7 @@ export const Navbar = ({ setIsInfoModalOpen, setIsStatsModalOpen }: Props) => {
         </div>
         <div className="right-icons">
           <div className="worldy-user-profile">
-            {auth0.isAuthenticated ? (
+            {userDetails.isAuthenticated ? (
               <Dropdown
                 label={
                   <UserCircleIcon className="header-icon h-6 w-6 cursor-pointer" />
@@ -44,18 +54,24 @@ export const Navbar = ({ setIsInfoModalOpen, setIsStatsModalOpen }: Props) => {
               >
                 <Dropdown.Header>
                   <span
-                    title={auth0.user?.name}
+                    title={userDetails.userName}
                     className="profile-name block text-sm"
                   >
-                    {auth0.user?.name}
+                    {userDetails.userName}
                   </span>
                   <span
-                    title={auth0.user?.email}
+                    title={userDetails.userId}
                     className="profile-mail block truncate text-sm font-medium"
                   >
-                    {auth0.user?.email}
+                    {userDetails.userId}
                   </span>
                 </Dropdown.Header>
+                {!userDetails.isVerified && (
+                  <Dropdown.Item onClick={() => onVerifyBtnClick()}>
+                    <CheckCircleIcon className="header-icon mr-2 h-6 w-6  cursor-pointer" />{' '}
+                    Verify Account
+                  </Dropdown.Item>
+                )}
                 <Dropdown.Item onClick={() => onLogOutBtnClick()}>
                   <LogoutIcon className="header-icon mr-2 h-6 w-6  cursor-pointer" />{' '}
                   வெளியேறு
@@ -63,7 +79,7 @@ export const Navbar = ({ setIsInfoModalOpen, setIsStatsModalOpen }: Props) => {
               </Dropdown>
             ) : (
               <UserCircleIcon
-                onClick={() => (auth0.isLoading ? {} : onLogInBtnClick())}
+                onClick={() => onLogInBtnClick()}
                 className="header-icon h-6 w-6 cursor-pointer"
               />
             )}

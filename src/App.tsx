@@ -267,6 +267,7 @@ function App({
     <Loader loading={true} />
   ) : (
     <Game
+      userDetails={userDetails}
       isNewUser={isNewUser}
       stats={stats}
       setStats={setStats}

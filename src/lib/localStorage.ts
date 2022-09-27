@@ -25,6 +25,10 @@ export type GameStats = {
 export type UserDetails = {
   userId: string
   isLocalUser: boolean
+  isAuthenticated: boolean
+  userName: string
+  isVerified: boolean
+  id: string
   isAccountExist?: boolean
 }
 

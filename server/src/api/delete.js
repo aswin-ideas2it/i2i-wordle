@@ -1,4 +1,5 @@
 const { gameModel } = require('./../models/game');
+const { userModel } = require('./../models/user');
 const { auditModel } = require('./../models/audit');
 
 const deleteUser = async (req, res) => {
@@ -6,7 +7,9 @@ const deleteUser = async (req, res) => {
         const {
             userId
         } = req.body;
-
+        await userModel.findOneAndRemove({
+            userId: userId
+        });
         await gameModel.findOneAndRemove({
             userId: userId
         });

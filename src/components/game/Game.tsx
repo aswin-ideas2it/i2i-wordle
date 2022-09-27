@@ -2,7 +2,7 @@ import { default as GraphemeSplitter } from 'grapheme-splitter'
 import { useEffect, useMemo, useState } from 'react'
 import Div100vh from 'react-div-100vh'
 
-import titleLogo from './../../assets/title.png'
+import Header from '../header/Header'
 import { Grid } from './../../components/grid/Grid'
 import { Keyboard } from './../../components/keyboard/Keyboard'
 import Loader from './../../components/loader'
@@ -28,7 +28,7 @@ import {
 import { useAlert } from './../../context/AlertContext'
 import { isInAppBrowser } from './../../lib/browser'
 import { checkGuess } from './../../lib/game'
-import { GameStats } from './../../lib/localStorage'
+import { GameStats, UserDetails } from './../../lib/localStorage'
 import { getStatsForCompletedGame } from './../../lib/stats'
 import { isWinningWord, unicodeLength, unicodeSplit } from './../../lib/words'
 
@@ -36,6 +36,7 @@ type GameProps = {
   stats: GameStats
   setStats: (guesses: GameStats) => void
   solution: string
+  userDetails: UserDetails
   guesses: string[]
   setGuesses: (guesses: string[]) => void
   isGameWon: boolean
@@ -53,6 +54,7 @@ function Game({
   stats,
   solution,
   guesses,
+  userDetails,
   gameDate,
   index,
   tomorrow,
@@ -94,20 +96,6 @@ function Game({
         durationMs: 7000,
       })
   }, [showErrorAlert])
-
-  useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add('dark')
-    } else {
-      document.documentElement.classList.remove('dark')
-    }
-
-    if (isHighContrastMode) {
-      document.documentElement.classList.add('high-contrast')
-    } else {
-      document.documentElement.classList.remove('high-contrast')
-    }
-  }, [isDarkMode, isHighContrastMode])
 
   const clearCurrentRowClass = () => {
     setCurrentRowClass('')
@@ -223,16 +211,11 @@ function Game({
         <Navbar
           setIsInfoModalOpen={setIsInfoModalOpen}
           setIsStatsModalOpen={setIsStatsModalOpen}
+          userDetails={userDetails}
         />
 
         <div className="mx-auto flex w-full grow flex-col pb-10 pl-3 pr-3 pt-8">
-          <div className="title-header">
-            <img className={`title-logo`} alt="logo" src={titleLogo}></img>
-            <div className={`title-desc`}>
-              OPEN YOUR EYES TO THE GREATNESS OF TAMIL NADU'S LITERATURE AND
-              HISTORY
-            </div>
-          </div>
+          <Header />
           <div
             style={{ position: 'relative' }}
             className="flex grow flex-col justify-center pb-6 short:pb-2"

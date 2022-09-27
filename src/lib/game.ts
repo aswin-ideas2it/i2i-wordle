@@ -25,6 +25,10 @@ type GameDetails = {
   index: number
   tomorrow: number
   gameDate: string
+  userDetails: {
+    _id: string
+    isVerified: boolean
+  }
 }
 
 export const retreiveGameDetails = (userId: string) => {
@@ -45,6 +49,7 @@ export const retreiveGameDetails = (userId: string) => {
         index: response.index,
         gameDate: response.gameDate,
         tomorrow: response.tomorrow,
+        userDetails: response.userDetails,
       })
     } catch (err) {
       reject(err)
