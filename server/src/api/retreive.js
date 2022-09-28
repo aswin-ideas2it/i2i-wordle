@@ -29,7 +29,7 @@ const retreive = async (req, res) => {
             gameData.userId = game[0].userId;
             gameData.isLocalUser = game[0].isLocalUser;
 
-            userDetails = await userModel.findOne({ userId }, { userId: 1, _id: 1, isVerified: 1 });
+            userDetails = await userModel.findOne({ userId }, { userId: 1, _id: 1, isVerified: 1, dp: 1 });
         }
         const config = await configModel.find({}, { words: 1 });
         if (!config.length) res.status(400).send('Config is missing');

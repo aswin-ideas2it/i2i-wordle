@@ -27,6 +27,7 @@ type GameDetails = {
   gameDate: string
   userDetails: {
     _id: string
+    dp: string
     isVerified: boolean
   }
 }

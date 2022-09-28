@@ -6,7 +6,12 @@ import Loader from './components/loader'
 import { useAlert } from './context/AlertContext'
 import { getISTDate } from './lib/dateutils'
 import { GameDataDoc, retreiveGameDetails } from './lib/game'
-import { UserDetails, getUser, setUser } from './lib/localStorage'
+import {
+  LSUserDetails,
+  UserDetails,
+  getUser,
+  setUser,
+} from './lib/localStorage'
 import { AuthStatus, checkAuthStatus } from './lib/user'
 
 function Auth() {
@@ -24,13 +29,14 @@ function Auth() {
     isAccountExist: false,
     userName: '',
     isAuthenticated: false,
+    dp: '',
   })
   const [oldUserId, setOldUserId] = useState('')
   const [loading, setIsLoading] = useState(true)
   const [gameDoc, setGameDoc] = useState<GameDataDoc | undefined>(undefined)
 
   useEffect(() => {
-    const _user: UserDetails | null = getUser()
+    const _user: LSUserDetails | null = getUser()
     const _userDetails = userDetails
     checkAuthStatus()
       .then((authStatus: AuthStatus) => {
@@ -71,6 +77,7 @@ function Auth() {
           if (_userDetails.isAccountExist) {
             _userDetails.isVerified = data.userDetails.isVerified
             _userDetails.id = data.userDetails._id
+            _userDetails.dp = data.userDetails.dp
             setGameDoc(data.gameData)
           }
           setUser(_userDetails)

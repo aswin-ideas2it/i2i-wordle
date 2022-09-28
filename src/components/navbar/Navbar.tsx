@@ -46,7 +46,18 @@ export const Navbar = ({
             {userDetails.isAuthenticated ? (
               <Dropdown
                 label={
-                  <UserCircleIcon className="header-icon h-6 w-6 cursor-pointer" />
+                  userDetails.dp ? (
+                    <img
+                      className="header-icon user-icon cursor-pointer rounded-full"
+                      referrerPolicy="no-referrer"
+                      alt="avatar"
+                      src={userDetails.dp}
+                    />
+                  ) : (
+                    <div className="header-icon user-icon flex cursor-pointer items-center justify-center rounded-full border-2 border-[#f1cb81] font-medium">
+                      {userDetails.userName.substring(0, 1).toUpperCase()}
+                    </div>
+                  )
                 }
                 inline={true}
                 floatingArrow={false}

@@ -36,8 +36,8 @@ const migrateUsers = () => {
                     picture = profile.picture;
                     loginCount = profile.logins_count;
                     lastLogin = profile.last_login;
-                    userType = userId.includes('auth0') ? 'auth0' : 'google';
-                    password = userId.includes('auth0') ? '123' : null
+                    userType = userId.includes('auth0') ? 'wordle' : 'google';
+                    password = userId.includes('auth0') ? '$2b$05$lPlT7bHtVhXoZEUdOhdYpOEwBPHcSUPOOyrpl5Rga3QWPCcTyeijy' : null
                 }
                 await createUser(email, name, password, isVerified, userType, createdAt, lastLogin, picture, loginCount);
                 console.log('User Created');

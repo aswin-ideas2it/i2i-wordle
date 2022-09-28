@@ -3,7 +3,8 @@ const { compareHash } = require('./encryption');
 
 const getLoggedInDetails = async (userId, password) => {
     const userDetails = await userModel.findOne({
-        userId
+        userId,
+        userType: 'wordle'
     })
     if (userDetails) {
         const isValid = await compareHash(password, userDetails.password);

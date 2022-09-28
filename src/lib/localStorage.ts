@@ -29,7 +29,13 @@ export type UserDetails = {
   userName: string
   isVerified: boolean
   id: string
+  dp: string
   isAccountExist?: boolean
+}
+
+export type LSUserDetails = {
+  userId: string
+  isLocalUser: boolean
 }
 
 export const saveGameStateToLocalStorage = (gameState: StoredGameState) => {
@@ -73,7 +79,11 @@ export const setStoredIsHighContrastMode = (isHighContrast: boolean) => {
 }
 
 export const setUser = (userDetails: UserDetails) => {
-  localStorage.setItem(userIdKey, JSON.stringify(userDetails))
+  const _userDetails: LSUserDetails = {
+    userId: userDetails.userId,
+    isLocalUser: userDetails.isLocalUser,
+  }
+  localStorage.setItem(userIdKey, JSON.stringify(_userDetails))
 }
 
 export const removeUser = () => {
@@ -88,7 +98,12 @@ export const getUser = () => {
       data = JSON.parse(user)
     } catch (err) {}
   }
-  return data ? (data as UserDetails) : null
+  return data
+    ? ({
+        userId: data.userId,
+        isLocalUser: data.isLocalUser,
+      } as LSUserDetails)
+    : null
 }
 
 export const getStoredIsHighContrastMode = () => {

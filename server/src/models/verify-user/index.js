@@ -14,7 +14,7 @@ const verifySchema = new Schema({
     createdAt: {
         type: Date,
         default: Date.now,
-        expires: 3600
+        expires: 259200
     }
 }, { collection: 'verify_details' });
 
