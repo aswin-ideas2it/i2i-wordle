@@ -17,6 +17,12 @@ const sendEmail = (email, subject, html) => {
 
             await transporter.sendMail({
                 from: mail.user,
+                list: {
+                    unsubscribe: {
+                        url: `https://ponniyinselvan.ideas2it.com/unsubscribe?email=${email}`,
+                        comment: 'Un Subscribe'
+                    }
+                },
                 to: email,
                 subject,
                 html,
