@@ -4,9 +4,15 @@ const crypto = require('crypto');
 const { sendEmail } = require('./../../lib/mail');
 const { config: { clientUrl } } = require('./../../config');
 const { readFileSync } = require('fs');
+const Joi = require('joi');
 
 const generate = async (req, res) => {
     try {
+        const { error } = Joi.object({
+            userId: Joi.string().pattern(new RegExp(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)).required()
+        }).options({ allowUnknown: true }).validate(req.body);
+        if (error) return res.status(400).send(error.message);
+
         const {
             userId
         } = req.body;

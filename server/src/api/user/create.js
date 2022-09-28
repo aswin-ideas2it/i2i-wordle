@@ -1,13 +1,22 @@
 const { userModel } = require('./../../models/user');
 const { generateHash } = require('./../../lib/encryption');
+const Joi = require('joi');
 
 const create = async (req, res) => {
     try {
+        const auth = (req.headers.authorization || '').split(' ')[1] || ''
+        const [userId, password] = Buffer.from(auth, 'base64').toString().split(':');
+
+        const { error } = Joi.object({
+            userName: Joi.string().required(),
+            password: Joi.string().min(6).required(),
+            userId: Joi.string().pattern(new RegExp(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)).required()
+        }).options({ allowUnknown: true }).validate({ ...req.body, userId, password });
+        if (error) return res.status(400).send(error.message);
+
         const {
             userName
         } = req.body;
-        const auth = (req.headers.authorization || '').split(' ')[1] || ''
-        const [userId, password] = Buffer.from(auth, 'base64').toString().split(':')
 
         const userDetails = await userModel.findOne({
             userId

@@ -1,7 +1,15 @@
 const { auditModel } = require('./../../models/audit');
+const Joi = require('joi');
 
 const gameDate = async (req, res) => {
     try {
+        const { error } = Joi.object({
+            date: Joi.string().required(),
+            status: Joi.alternatives().try(Joi.number(), Joi.array().items(Joi.number())).required(),
+            showMinimimalData: Joi.boolean()
+        }).options({ allowUnknown: true }).validate(req.body);
+        if (error) return res.status(400).send(error.message);
+
         const {
             date,
             status,

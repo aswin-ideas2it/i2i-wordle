@@ -12,10 +12,7 @@ router.post('/logout', (req, res) => {
     });
 });
 
-router.post('/checkAuthStatus', (req, res) => {
-    const isAuth = req.isAuthenticated()
-    res.send({ isAuthenticated: isAuth, user: req.user })
-})
+router.post('/checkAuthStatus', (req, res) => res.send({ isAuthenticated: req.isAuthenticated(), user: req.user }))
 
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 

@@ -22,7 +22,9 @@ const sendEmail = (email, subject, html) => {
                 html,
             });
             resolve();
+            console.log('Mail sent successfully');
         } catch (error) {
+            console.log('Mail not sent', error);
             reject(error);
         }
     });

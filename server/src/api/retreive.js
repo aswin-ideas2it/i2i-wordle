@@ -3,9 +3,15 @@ const { userModel } = require('./../models/user');
 const { configModel } = require('./../models/config');
 const { encrypt } = require('./../lib/encryption');
 const { getSolution, getFormattedToday } = require('./../lib/date');
+const Joi = require('joi');
 
 const retreive = async (req, res) => {
     try {
+        const { error } = Joi.object({
+            userId: Joi.string().required()
+        }).options({ allowUnknown: true }).validate(req.body);
+        if (error) return res.status(400).send(error.message);
+
         const {
             userId
         } = req.body;

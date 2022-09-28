@@ -3,9 +3,19 @@ const { auditModel } = require('../models/audit');
 const { decrypt } = require('../lib/encryption');
 const { getAuditDetails, getGameHistory } = require('../lib/audit');
 const { getFormattedToday } = require('../lib/date');
+const Joi = require('joi');
 
 const updateState = async (req, res) => {
     try {
+        const { error } = Joi.object({
+            userDetails: Joi.object({
+                userId: Joi.string().required(),
+                isLocalUser: Joi.boolean().required(),
+            }).required(),
+            state: Joi.string().required()
+        }).options({ allowUnknown: true }).validate(req.body);
+        if (error) return res.status(400).send(error.message);
+
         const {
             userDetails,
             state: encryptedState

@@ -1,7 +1,13 @@
 const { userModel } = require('../../models/user');
+const Joi = require('joi');
 
 const getUser = async (req, res) => {
     try {
+        const { error } = Joi.object({
+            id: Joi.string().required()
+        }).options({ allowUnknown: true }).validate(req.body);
+        if (error) return res.status(400).send(error.message);
+
         const {
             id,
         } = req.body;
