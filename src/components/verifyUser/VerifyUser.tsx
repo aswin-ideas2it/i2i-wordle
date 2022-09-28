@@ -77,12 +77,12 @@ const VerifyUser = () => {
                 ) : (
                   <>
                     <div className="text-l mt-2 inline-flex items-center justify-center px-4 py-2 text-center text-white ">
-                      A Verification link has been emailed to you. 
+                      A Verification link has been emailed to you.
                     </div>
                   </>
                 )}
-                <button className="wordly-btn mt-2 inline-flex w-full items-center justify-center rounded-md border border-transparent px-4 py-2 text-center text-sm font-medium text-white shadow-sm sm:text-base">
-                  <Link className="font-medium" to={'/'}>
+                <button className="wordly-btn mt-2 inline-flex w-full items-center justify-center rounded-md border border-transparent text-center text-sm font-medium text-white shadow-sm sm:text-base">
+                  <Link className="w-full px-4 py-2 font-medium" to={'/'}>
                     Back to Home
                   </Link>
                 </button>

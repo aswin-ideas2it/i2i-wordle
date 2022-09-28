@@ -143,7 +143,7 @@ const Login = () => {
                 </div>
                 <div>
                   <Link
-                    className="font-medium text-[#f1cb81]"
+                    className="w-full font-medium text-[#f1cb81]"
                     to={'/forgot-password'}
                   >
                     Forgot password?

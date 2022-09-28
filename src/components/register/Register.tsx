@@ -182,7 +182,7 @@ const Register = () => {
                 </button>
                 <p className="text-sm font-light text-gray-100">
                   Already have an account? &nbsp;
-                  <Link className="font-medium text-[#f1cb81]" to={'/login'}>
+                  <Link className="w-full font-medium text-[#f1cb81]" to={'/login'}>
                     Log In
                   </Link>
                 </p>

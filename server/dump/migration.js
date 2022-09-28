@@ -1,11 +1,13 @@
-const mongoose = require('mongoose');
+const { join } = require('path');
+require('dotenv').config({ path: join(__dirname, './../.env') });
 
+const mongoose = require('mongoose');
 const { sendPostRequest, sendGetRequest } = require('./../src/lib/http');
 const { gameModel } = require('./../src/models/game');
 const { auditModel } = require('./../src/models/audit');
 const { userModel } = require('./../src/models/user');
 
-const MONGO_URL = 'mongodb://localhost:27017/wordle-app';
+const MONGO_URL = process.env.MONGO_URI;
 
 const connectMongo = async () => mongoose.connect(MONGO_URL);
 
@@ -90,8 +92,8 @@ const getAccessToken = () => {
             const payload = {
                 'audience': 'https://ps-ideas2it.us.auth0.com/api/v2/',
                 'grant_type': 'client_credentials',
-                'client_id': 'CykeNMQXMAfA1AIVyvzDm8SwTXdbIzfM',
-                'client_secret': 'Oa6VvgezAf0QP9otKQybNDKiPJuA5FOqCKIyB4K0QDWH1bhWF1nV8ANUF1_Z9IdG'
+                'client_id': process.env.AUTH0_CLIENT_ID,
+                'client_secret': process.env.AUTH0_CLIENT_SECRET
             }
             const response = await sendPostRequest(url, payload);
             resolve(response);
@@ -122,8 +124,10 @@ connectMongo().then(() => {
     console.log(`Mongo DB Connected`);
     migrateUsers().then((length) => {
         console.log(`Migrated ${length} users successfully`);
+        process.exit(0);
     }).catch((err) => {
         console.log(err);
         console.log('Migration failed');
+        process.exit(1);
     })
 });
