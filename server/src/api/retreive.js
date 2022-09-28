@@ -18,7 +18,7 @@ const retreive = async (req, res) => {
         const _sol = getSolution();
         const solutionIndex = _sol.index;
         let gameData = undefined;
-        let userDetails = undefined;
+        let userDetails = await userModel.findOne({ userId }, { userId: 1, _id: 1, isVerified: 1, dp: 1 });
         let game = await gameModel.find({
             userId: userId
         }, { _id: 0, "stats._id": 0, "state._id": 0 });
@@ -28,8 +28,6 @@ const retreive = async (req, res) => {
             gameData.state = encrypt(JSON.stringify(game[0].state));
             gameData.userId = game[0].userId;
             gameData.isLocalUser = game[0].isLocalUser;
-
-            userDetails = await userModel.findOne({ userId }, { userId: 1, _id: 1, isVerified: 1, dp: 1 });
         }
         const config = await configModel.find({}, { words: 1 });
         if (!config.length) res.status(400).send('Config is missing');

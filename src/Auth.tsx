@@ -75,10 +75,12 @@ function Auth() {
           }
           _userDetails.isAccountExist = !!data.gameData
           if (_userDetails.isAccountExist) {
+            setGameDoc(data.gameData)
+          }
+          if (data.userDetails && data.userDetails._id) {
             _userDetails.isVerified = data.userDetails.isVerified
             _userDetails.id = data.userDetails._id
             _userDetails.dp = data.userDetails.dp
-            setGameDoc(data.gameData)
           }
           setUser(_userDetails)
           setUserDetails(_userDetails)
