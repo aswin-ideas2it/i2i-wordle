@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
 
 import App from './App'
@@ -15,6 +16,7 @@ import {
 import { AuthStatus, checkAuthStatus } from './lib/user'
 
 function Auth() {
+  const navigate = useNavigate()
   const { showError: showErrorAlert } = useAlert()
   const [gameDate, setGameDate] = useState('')
   const [index, setIndex] = useState(0)
@@ -46,6 +48,13 @@ function Auth() {
           _userDetails.isLocalUser = false
           _userDetails.userName = authStatus.user.userName
         } else {
+          if (
+            _user?.userId &&
+            (_user.userId.includes('auth0|') ||
+              _user.userId.includes('google-oauth2|'))
+          ) {
+            navigate('/login')
+          }
           _userDetails.userId =
             _user?.userId && _user.userId.includes('wordly-app')
               ? _user.userId
