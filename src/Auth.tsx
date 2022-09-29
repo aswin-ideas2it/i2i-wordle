@@ -54,6 +54,7 @@ function Auth() {
               _user.userId.includes('google-oauth2|'))
           ) {
             navigate('/login')
+            return
           }
           _userDetails.userId =
             _user?.userId && _user.userId.includes('wordly-app')
