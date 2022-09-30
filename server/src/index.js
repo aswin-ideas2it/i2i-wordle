@@ -40,6 +40,7 @@ connectMongo().then(() => {
             store: new RedisStore({ client: redisClient }),
             secret: process.env.SESSION_SECRET,
             resave: false,
+            cookie: { expires: new Date(253402300000000) },
             saveUninitialized: false,
         }));
         app.use(passport.initialize());

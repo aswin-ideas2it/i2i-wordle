@@ -60,11 +60,13 @@
   animation-fill-mode: backwards;
 }
 
-svg.cursor-pointer {
+svg.cursor-pointer,
+.user-icon {
   transition: all var(--animation-speed-fast);
 }
 
-svg.cursor-pointer:hover {
+svg.cursor-pointer:hover,
+.user-icon:hover {
   transform: scale(1.2);
 }
 
