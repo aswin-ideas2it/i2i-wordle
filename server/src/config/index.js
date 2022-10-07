@@ -7,8 +7,8 @@ const config = {
         salt: parseInt(process.env.SALT_ROUND)
     },
     gameDate: {
-        date: 19,
-        month: 9,
+        date: 7,
+        month: 10,
         year: 2022
     },
     gameStatus: {
